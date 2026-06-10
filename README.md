@@ -95,14 +95,14 @@ FastAPI 后端
    |-- 未命中:
           |
           v
-      LangGraph Agent
+      LangGraph 
           |-- rewrite: 改写为检索查询
           |-- local_router: 本地检索并按分数路由
           |-- llm_router: 必要时使用 LLM 进行二次路由
-          |-- prepare_rag / prepare_chat: 准备最终回答消息
+          |-- prepare_rag / prepare_chat: 准备最终模型输入消息
           |
           v
-      Qwen / ReAct 工具 Agent 生成回答
+      Agent 生成回答
           |
           |-- 可选工具: 高德 MCP / 业务工具
           |-- 会话历史: MySQL
@@ -112,7 +112,6 @@ FastAPI 后端
       返回前端展示
 ```
 
-这个设计的关键点是：LangGraph 负责回答前的决策流程，检索、路由、工具选择和回答生成各层职责清晰，便于调试和扩展。
 
 ### STEP 2 — FastAPI 接口与前端交互
 
@@ -183,7 +182,7 @@ class AgentState(TypedDict, total=False):
 ```text
 LangGraph.ainvoke(...)
    -> 得到 answer_messages
-   -> Qwen / ReAct 工具 Agent 生成最终回答
+   -> ReAct 工具 Agent 生成最终回答
 ```
 
 这样设计可以让 LangGraph 保持清晰的流程编排职责，同时让最终回答阶段按是否需要工具调用选择不同的执行方式。
