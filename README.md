@@ -185,8 +185,7 @@ LangGraph.ainvoke(...)
    -> ReAct 工具 Agent 生成最终回答
 ```
 
-这样设计可以让 LangGraph 保持清晰的流程编排职责，同时让最终回答阶段按是否需要工具调用选择不同的执行方式。
-
+这样设计是为了实现简单流式输出，因此把“最终回答生成”放到了图外。
 ### STEP 4 — RAG 检索增强生成
 
 项目通过 RAG（Retrieval-Augmented Generation）提升回答的准确性和可追溯性。
